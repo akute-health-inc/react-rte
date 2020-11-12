@@ -245,10 +245,10 @@ export default class EditorToolbar extends Component {
           onTogglePopover={this._toggleShowLinkInput}
           defaultValue={defaultValue}
           onSubmit={this._setLink}
-          checkOptions={{
-            targetBlank: {label: 'Open link in new tab', defaultValue: targetBlank},
-            noFollow: {label: 'No follow', defaultValue: noFollow},
-          }}
+          // checkOptions={{
+          //   targetBlank: {label: 'Open link in new tab', defaultValue: targetBlank},
+          //   noFollow: {label: 'No follow', defaultValue: noFollow},
+          // }}
         />
         <IconButton
           {...toolbarConfig.extraProps}
@@ -399,8 +399,8 @@ export default class EditorToolbar extends Component {
 
     this.setState({showLinkInput: false});
     if (canApplyLink) {
-      let target = checkOptions.targetBlank ? '_blank' : undefined;
-      let rel = checkOptions.noFollow ? 'nofollow' : undefined;
+      let target = checkOptions.targetBlank ? '_blank' : '_blank';
+      let rel = checkOptions.noFollow ? 'nofollow noopener noreferrer' : 'nofollow noopener noreferrer';
       contentState = contentState.createEntity(ENTITY_TYPE.LINK, 'MUTABLE', {url, target, rel});
       let entityKey = contentState.getLastCreatedEntityKey();
 
