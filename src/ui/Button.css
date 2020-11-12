@@ -17,7 +17,7 @@
 }
 
 .root:hover {
-  background: "none #e7e7e7",
+  background: none #e7e7e7;
 }
 
 .root:disabled {
