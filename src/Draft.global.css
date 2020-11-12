@@ -5,8 +5,9 @@
 .DraftEditor-root,
 .DraftEditor-editorContainer,
 .public-DraftEditor-content {
-  height: inherit;
+  min-height: 4em;
   text-align: initial;
+  margin: 0;
 }
 
 .DraftEditor-root {
