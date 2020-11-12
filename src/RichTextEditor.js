@@ -101,8 +101,17 @@ export default class RichTextEditor extends Component {
   }
 
   isSoftNewlineEvent(e) {
-    console.debug("soft newline", e);
-    return e.key === "Enter";
+    console.debug("soft newline", e.key);
+    if (
+      e.key === "Enter" &&
+      (e.getModifierState("Shift") ||
+        e.getModifierState("Alt") ||
+        e.getModifierState("Control"))
+    ) {
+      return false;
+    } else {
+      return e.key === "Enter";
+    }
   }
 
   render() {
