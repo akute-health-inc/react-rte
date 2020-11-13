@@ -315,12 +315,12 @@ export default class EditorToolbar extends Component {
   }
 
   _renderCustomIcons(name: string, toolbarConfig: ToolbarConfig) {
-    let {editorState} = this.props;
+    // let {editorState} = this.props;
     let buttons = (toolbarConfig.CUSTOM_ICONS || []).map((type, index) => (
       <StyleButton
         {...toolbarConfig.extraProps}
         key={String(index)}
-        isActive={currentStyle.has(type.style)}
+        isActive={false}
         label={type.label}
         style={type.style}
         className={type.className}
