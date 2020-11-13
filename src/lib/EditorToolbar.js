@@ -96,6 +96,9 @@ export default class EditorToolbar extends Component {
         case 'HISTORY_BUTTONS': {
           return this._renderUndoRedo(groupName, toolbarConfig);
         }
+        case 'CUSTOM_ICONS': {
+          return this._renderCustomIcons(groupName, toolbarConfig);
+        }
       }
     });
     return (
@@ -308,6 +311,23 @@ export default class EditorToolbar extends Component {
           focusOnClick={false}
         />
       </ButtonGroup>
+    );
+  }
+
+  _renderCustomIcons(name: string, toolbarConfig: ToolbarConfig) {
+    let {editorState} = this.props;
+    let buttons = (toolbarConfig.CUSTOM_ICONS || []).map((type, index) => (
+      <StyleButton
+        {...toolbarConfig.extraProps}
+        key={String(index)}
+        isActive={currentStyle.has(type.style)}
+        label={type.label}
+        style={type.style}
+        className={type.className}
+      />
+    ));
+    return (
+      <ButtonGroup key={name}>{buttons}</ButtonGroup>
     );
   }
 
