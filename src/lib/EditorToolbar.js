@@ -535,9 +535,9 @@ export default class EditorToolbar extends Component {
    * @return {String}
   */
   _getTextSelection(contentState, selection, blockDelimiter) {
-    // if (!contentState || !selectedBlock) {
-    //   return "";
-    // }
+    if (!contentState || !selection) {
+      return "";
+    }
     blockDelimiter = blockDelimiter || '\n';
     var startKey   = selection.getStartKey();
     var endKey     = selection.getEndKey();
