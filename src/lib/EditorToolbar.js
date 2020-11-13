@@ -224,16 +224,18 @@ export default class EditorToolbar extends Component {
     let selection = editorState.getSelection();
     let entity = this._getEntityAtCursor();
     let hasSelection = !selection.isCollapsed();
-    console.debug("entity", entity);
-    console.debug("entity getData", entity ? entity.getData() : null);
-    console.debug("name", name);
-    console.debug("selection", selection ? selection.serialize() : null);
+    // console.debug("entity", entity);
+    // console.debug("entity getData", entity ? entity.getData() : null);
+    // console.debug("name", name);
+    // console.debug("selection", selection ? selection.serialize() : null);
     let contentState = editorState.getCurrentContent();
-    console.debug("content state", contentState);
-    console.debug("content state text", contentState.getPlainText());
+    // console.debug("content state", contentState);
+    // console.debug("content state text", contentState.getPlainText());
+    let text = this._getTextSelection(contentState, selection);
+    console.debug("text", text);
     let isCursorOnLink = (entity != null && entity.type === ENTITY_TYPE.LINK);
     let shouldShowLinkButton = hasSelection || isCursorOnLink;
-    let defaultValue = (entity && isCursorOnLink) ? entity.getData().url : entity;
+    let defaultValue = (entity && isCursorOnLink) ? entity.getData().url : "";
     let config = toolbarConfig.LINK_BUTTONS || {};
     let linkConfig = config.link || {};
     let removeLinkConfig = config.removeLink || {};
@@ -523,5 +525,57 @@ export default class EditorToolbar extends Component {
     setTimeout(() => {
       this.props.focusEditor();
     }, 50);
+  }
+
+  /**
+   * Get current selected text
+   * @param  {Draft.ContentState}
+   * @param  {Draft.SelectionState}
+   * @param  {String}
+   * @return {String}
+  */
+  _getTextSelection(contentState, selection, blockDelimiter) {
+    if (!contentState || !selectedBlock) {
+      return "";
+    }
+    blockDelimiter = blockDelimiter || '\n';
+    var startKey   = selection.getStartKey();
+    var endKey     = selection.getEndKey();
+    var blocks     = contentState.getBlockMap();
+
+    var lastWasEnd = false;
+    var selectedBlock = blocks
+        .skipUntil(function(block) {
+            return block.getKey() === startKey;
+        })
+        .takeUntil(function(block) {
+            var result = lastWasEnd;
+
+            if (block.getKey() === endKey) {
+                lastWasEnd = true;
+            }
+
+            return result;
+        });
+
+    return selectedBlock
+        .map(function(block) {
+            var key = block.getKey();
+            var text = block.getText();
+
+            var start = 0;
+            var end = text.length;
+
+            if (key === startKey) {
+                start = selection.getStartOffset();
+            }
+            if (key === endKey) {
+                end = selection.getEndOffset();
+            }
+
+            text = text.slice(start, end);
+            return text;
+        })
+        .join(blockDelimiter);
   }
 }
