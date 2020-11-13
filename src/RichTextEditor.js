@@ -19,7 +19,7 @@ import changeBlockType from "./lib/changeBlockType";
 import getBlocksInSelection from "./lib/getBlocksInSelection";
 import insertBlockAfter from "./lib/insertBlockAfter";
 import isListItem from "./lib/isListItem";
-// import isSoftNewlineEvent from 'draft-js/lib/isSoftNewlineEvent';
+import isSoftNewlineEvent from 'draft-js/lib/isSoftNewlineEvent';
 import EditorToolbar from "./lib/EditorToolbar";
 import EditorValue from "./lib/EditorValue";
 import LinkDecorator from "./lib/LinkDecorator";
@@ -100,7 +100,7 @@ export default class RichTextEditor extends Component {
     this._focus();
   }
 
-  isSoftNewlineEvent(e) {
+  isInvertedSoftNewlineEvent(e) {
     if (
       e.key === "Enter" &&
       (e.getModifierState("Shift") ||
@@ -227,7 +227,7 @@ export default class RichTextEditor extends Component {
   // `shift + return` should insert a soft newline.
   _handleReturnSoftNewline(event: Object): boolean {
     let editorState = this.props.value.getEditorState();
-    if (this.isSoftNewlineEvent(event)) {
+    if (isSoftNewlineEvent(event)) {
       let selection = editorState.getSelection();
       if (selection.isCollapsed()) {
         this._onChange(RichUtils.insertSoftNewline(editorState));
