@@ -227,7 +227,7 @@ export default class EditorToolbar extends Component {
     console.debug("entity", entity);
     console.debug("entity getData", entity ? entity.getData() : null);
     console.debug("name", name);
-    console.debug("selection", selection);
+    console.debug("selection", selection ? selection.serialize() : null);
     let isCursorOnLink = (entity != null && entity.type === ENTITY_TYPE.LINK);
     let shouldShowLinkButton = hasSelection || isCursorOnLink;
     let defaultValue = (entity && isCursorOnLink) ? entity.getData().url : entity;
