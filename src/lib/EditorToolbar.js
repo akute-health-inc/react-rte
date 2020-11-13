@@ -224,9 +224,13 @@ export default class EditorToolbar extends Component {
     let selection = editorState.getSelection();
     let entity = this._getEntityAtCursor();
     let hasSelection = !selection.isCollapsed();
+    console.debug("entity", entity);
+    console.debug("entity getData", entity ? entity.getData() : null);
+    console.debug("name", name);
+    console.debug("selection", selection);
     let isCursorOnLink = (entity != null && entity.type === ENTITY_TYPE.LINK);
     let shouldShowLinkButton = hasSelection || isCursorOnLink;
-    let defaultValue = (entity && isCursorOnLink) ? entity.getData().url : '';
+    let defaultValue = (entity && isCursorOnLink) ? entity.getData().url : entity;
     let config = toolbarConfig.LINK_BUTTONS || {};
     let linkConfig = config.link || {};
     let removeLinkConfig = config.removeLink || {};

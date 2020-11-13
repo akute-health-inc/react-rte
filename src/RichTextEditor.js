@@ -101,7 +101,6 @@ export default class RichTextEditor extends Component {
   }
 
   isSoftNewlineEvent(e) {
-    console.debug("soft newline", e.key);
     if (
       e.key === "Enter" &&
       (e.getModifierState("Shift") ||
