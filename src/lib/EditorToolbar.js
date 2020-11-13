@@ -232,10 +232,10 @@ export default class EditorToolbar extends Component {
     // console.debug("content state", contentState);
     // console.debug("content state text", contentState.getPlainText());
     let text = this._getTextSelection(contentState, selection);
-    console.debug("text", text, this._isValidUrl(text));
+    console.debug("text", text, this._isValidUrl(text), this._urlContainsHttp(text));
     let isCursorOnLink = (entity != null && entity.type === ENTITY_TYPE.LINK);
     let shouldShowLinkButton = hasSelection || isCursorOnLink;
-    let defaultValue = (entity && isCursorOnLink) ? entity.getData().url : "";
+    let defaultValue = (entity && isCursorOnLink) ? entity.getData().url : this._isValidUrl(text) ? this._urlContainsHttp(text) ? text : `https://${text}` : "";
     let config = toolbarConfig.LINK_BUTTONS || {};
     let linkConfig = config.link || {};
     let removeLinkConfig = config.removeLink || {};
@@ -528,8 +528,13 @@ export default class EditorToolbar extends Component {
   }
 
   _isValidUrl(text) {
-    const url = new RegExp("^(http(s*):\/\/)*[a-zA-Z0-9-.]{1,}\.[a-zA-Z]{2,}([\/\?].[^\s]*)*$", "i");
+    const url = new RegExp("^(http(s*):\\/\\/)*[a-zA-Z0-9-.]{1,}\\.[a-zA-Z]{2,}([\\/\\?].[^\\s]*)*$", "i");
     return url.test(text);
+  }
+
+  _urlContainsHttp(text) {
+    const http = new RegExp("^(http(s*):\\/\\/)", "i");
+    return http.test(text);
   }
 
   /**
