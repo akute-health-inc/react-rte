@@ -15,7 +15,7 @@ import getEntityAtCursor from './getEntityAtCursor';
 import clearEntityForRange from './clearEntityForRange';
 import autobind from 'class-autobind';
 import cx from 'classnames';
-import psl from "psl";
+import { isValidHostname } from 'tldjs';
 import styles from './EditorToolbar.css';
 
 import type EventEmitter from 'events';
@@ -232,7 +232,7 @@ export default class EditorToolbar extends Component {
     // console.debug("content state", contentState);
     // console.debug("content state text", contentState.getPlainText());
     let text = this._getTextSelection(contentState, selection);
-    console.debug("text", text, text ? psl.isValid(text) : null);
+    console.debug("text", text, text ? isValidHostname(text) : null);
     let isCursorOnLink = (entity != null && entity.type === ENTITY_TYPE.LINK);
     let shouldShowLinkButton = hasSelection || isCursorOnLink;
     let defaultValue = (entity && isCursorOnLink) ? entity.getData().url : "";
