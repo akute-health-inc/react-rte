@@ -224,15 +224,8 @@ export default class EditorToolbar extends Component {
     let selection = editorState.getSelection();
     let entity = this._getEntityAtCursor();
     let hasSelection = !selection.isCollapsed();
-    // console.debug("entity", entity);
-    // console.debug("entity getData", entity ? entity.getData() : null);
-    // console.debug("name", name);
-    // console.debug("selection", selection ? selection.serialize() : null);
     let contentState = editorState.getCurrentContent();
-    // console.debug("content state", contentState);
-    // console.debug("content state text", contentState.getPlainText());
     let text = this._getTextSelection(contentState, selection);
-    console.debug("text", text, this._isValidUrl(text), this._urlContainsHttp(text));
     let isCursorOnLink = (entity != null && entity.type === ENTITY_TYPE.LINK);
     let shouldShowLinkButton = hasSelection || isCursorOnLink;
     let defaultValue = (entity && isCursorOnLink) ? entity.getData().url : this._isValidUrl(text) ? this._urlContainsHttp(text) ? text : `https://${text}` : "";
