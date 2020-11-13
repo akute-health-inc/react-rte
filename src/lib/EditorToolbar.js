@@ -15,7 +15,7 @@ import getEntityAtCursor from './getEntityAtCursor';
 import clearEntityForRange from './clearEntityForRange';
 import autobind from 'class-autobind';
 import cx from 'classnames';
-import tldjs from 'tldjs';
+
 import styles from './EditorToolbar.css';
 
 import type EventEmitter from 'events';
@@ -232,7 +232,7 @@ export default class EditorToolbar extends Component {
     // console.debug("content state", contentState);
     // console.debug("content state text", contentState.getPlainText());
     let text = this._getTextSelection(contentState, selection);
-    console.debug("text", text, text ? tldjs.tldExists(text) : null);
+    console.debug("text", text, this._isValidUrl(text));
     let isCursorOnLink = (entity != null && entity.type === ENTITY_TYPE.LINK);
     let shouldShowLinkButton = hasSelection || isCursorOnLink;
     let defaultValue = (entity && isCursorOnLink) ? entity.getData().url : "";
@@ -525,6 +525,11 @@ export default class EditorToolbar extends Component {
     setTimeout(() => {
       this.props.focusEditor();
     }, 50);
+  }
+
+  _isValidUrl(text) {
+    const url = new RegExp("^(http(s*):\\/\\/)*[a-zA-Z0-9-.]{1,}\.[a-zA-Z]{2,}([\\/\\?][^\\s.*]+$");
+    return url.test(text);
   }
 
   /**
