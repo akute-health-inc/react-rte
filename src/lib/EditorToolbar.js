@@ -528,7 +528,7 @@ export default class EditorToolbar extends Component {
   }
 
   _isValidUrl(text) {
-    const url = new RegExp("^(http(s*):\\/\\/)*[a-zA-Z0-9-.]{1,}\.[a-zA-Z]{2,}([\\/\\?][^\\s.*]+$");
+    const url = new RegExp("^(http(s*):\/\/)*[a-zA-Z0-9-.]{1,}\.[a-zA-Z]{2,}([\/\?].[^\s]*)*$", "i");
     return url.test(text);
   }
 
