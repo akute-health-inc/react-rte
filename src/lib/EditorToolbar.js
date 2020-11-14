@@ -325,6 +325,7 @@ export default class EditorToolbar extends Component {
         label={type.label}
         style={type.style}
         className={type.className}
+        customIcon={type.customIcon}
       />
     ));
     return (

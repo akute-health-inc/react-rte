@@ -21,7 +21,7 @@ export default class IconButton extends Component {
 
   render() {
     let {props} = this;
-    let {className, iconName, label, children, isActive, isSwitch, ...otherProps} = props;
+    let {className, iconName, label, children, isActive, isSwitch, customIcon, ...otherProps} = props;
     className = cx(className, {
       [styles.root]: true,
       [styles.isActive]: isActive,
@@ -29,7 +29,7 @@ export default class IconButton extends Component {
     return (
       <ButtonWrap>
         <Button {...otherProps} title={label} className={className} role={isSwitch && 'switch'} aria-checked={isActive}>
-          <span className={styles['icon-' + iconName]} />
+          { props.customIcon ? props.customIcon : <span className={styles['icon-' + iconName]} />}
           {/* TODO: add text label here with aria-hidden */}
         </Button>
         {children}
