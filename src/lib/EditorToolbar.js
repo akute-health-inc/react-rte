@@ -321,6 +321,7 @@ export default class EditorToolbar extends Component {
         {...toolbarConfig.extraProps}
         key={String(index)}
         isActive={false}
+        isDisabled={true}
         label={type.label}
         style={type.style}
         className={type.className}
